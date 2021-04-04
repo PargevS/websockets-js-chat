@@ -1,13 +1,13 @@
 const ws = require('ws');
 
-const PORT = 8000;
+const PORT = 8400;
 
 
 const wss = new ws.Server({port: PORT}, () => console.log(`Server started on port ${PORT}`));
 
 
 wss.on('connection', function connection(ws) {
-    ws.send('message', (message) => {
+    ws.on('message', function (message) {
         message = JSON.parse(message);
 
         switch (message.event) {
@@ -15,7 +15,7 @@ wss.on('connection', function connection(ws) {
                 sendMessage(message)
                 break;
             case "connection":
-                sendMessage(message);
+                sendMessage(message)
                 break;
         }
     });

@@ -1,12 +1,12 @@
 
 import './App.scss';
-import ES_Chat from "./chat/ES_Chat";
+import WS_Chat from "./chat/WS_Chat";
 
 
 function App() {
   return (
     <div className="app">
-      <ES_Chat/>
+      <WS_Chat/>
     </div>
   );
 }

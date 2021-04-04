@@ -1,0 +1,50 @@
+.pl-chat{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 10vh;
+  width: 100%;
+  min-height: 100vh;
+  background: #24292E;
+}
+
+
+.pl-chat .form{
+  display: flex;
+  flex-direction: column;
+  padding: 1.5em;
+  border: 1px solid #fff;
+
+  & > input, & > button{
+    margin: 0.5em 0;
+    display: inline-block;
+  }
+
+  & > input{font-size: 1.2em;}
+  & > button{font-size: 16px; height: 2em;cursor: pointer;}
+}
+
+.pl-chat .messages{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .message{
+    width: 80%;
+    padding: 0.4em;
+    text-align: left;
+    max-width: 290px;
+    margin: 15px auto;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.75);
+  }
+  .username{
+    width: 100%;
+    text-align: center;
+    margin: 1em 0 2em 0;
+    border-bottom: 2px solid #ffffff;
+    color: #ffffff;
+    padding: 0.5em 0;
+  }
+}
