@@ -1,41 +1,35 @@
-const express = require('express');
-const cors = require('cors');
-const events = require('events');
 const ws = require('ws');
 
-// main vars
-const emitter = new events.EventEmitter();
 const PORT = 8000;
-const app = express();
 
-// middleware
-app.use(cors());
-app.use(express.json());
 
-// routes
-app.get('/connect', (req, res) => {
-    res.writeHead(200, {
-        'Connection': 'keep-alive',
-        'Content-type': 'text/event-stream',
-        'Cache-control': 'no-cache'
+const wss = new ws.Server({port: PORT}, () => console.log(`Server started on port ${PORT}`));
+
+
+wss.on('connection', function connection(ws) {
+    ws.send('message', (message) => {
+        message = JSON.parse(message);
+
+        switch (message.event) {
+            case "message":
+                sendMessage(message)
+                break;
+            case "connection":
+                sendMessage(message);
+                break;
+        }
     });
-
-    emitter.on('newMessage', (message) => res.write(`data: ${JSON.stringify(message)}\n\n`));
 });
 
-app.post('/add-message', (req, res) => {
-    // receiving a new message
-    const message = req.body;
+const message = {
+    event: 'message/connection',
+    id: 284848,
+    date: '',
+    message: 'Message text'
+}
 
-    console.log(req.body)
-
-    //sending a new message to the chat to show
-    emitter.emit('newMessage', message);
-
-    res.status(200);
-});
-
-
-
-// run server
-app.listen(PORT, () => console.log(`server started on port ${PORT}`));
+const sendMessage = (message) => {
+    wss.clients.forEach(client => {
+        client.send(JSON.stringify(message));
+    });
+}
